@@ -1,0 +1,10 @@
+.loginBtn{
+    display: inline-block;
+    padding: 7px 20px;
+    border-radius: 20px;
+    background-color: #ff4040;
+    color:white;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 18px;
+}

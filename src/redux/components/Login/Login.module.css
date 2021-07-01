@@ -1,0 +1,103 @@
+.loginForm__wrapper h3 {
+    font-size: 20px;
+    text-align: center;
+    color: #3498db;
+    text-transform: uppercase;
+    padding-top: 15px;
+}
+
+.loginForm {
+    width: 400px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 10px;
+}
+
+.loginForm__wrapper .login {
+    display: block;
+    width: 72px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 15px;
+    text-align: center;
+    border: 1px solid white;
+    margin: 10px auto;
+}
+
+.loginForm__wrapper input[type="email"], .loginForm__wrapper input[type="password"] {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 10px auto;
+    text-align: center;
+    border: 2px solid #3498db;
+    padding: 14px 10px;
+    width: 200px;
+    outline: none;
+    /* color:white;*/
+    border-radius: 24px;
+    transition: 0.3s;
+}
+
+.loginForm__wrapper input[type="email"]:focus, .loginForm__wrapper input[type="password"]:focus {
+    width: 280px;
+    border-color: #ff4040;
+}
+
+.loginForm__wrapper button:disabled {
+    border: 2px solid #524f4e;
+    color: #524f4e;
+}
+
+.loginForm__wrapper button {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #ff4040;
+    padding: 14px 40px;
+    outline: none;
+    color: #ff4040;
+    border-radius: 24px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.loginForm__wrapper button:hover:not([disabled]) {
+    background-color: #ff4040;
+    color: white;
+}
+
+.loginForm__wrapper input[type="checkbox"]{
+    margin-right: 10px;
+}
+
+
+/*.pwd-wrapper {
+    display: inline-block;
+    position: relative;
+
+}*/
+
+/*
+.showPwd{
+    color:#3498db;
+    cursor:pointer;
+    position: absolute;
+    right: 50%;
+    bottom: 0;
+    transform: translate(50%, 50%);
+    transition: 0.3s;
+
+}
+*/
+
+.rememberMe{
+    padding: 10px 0;
+}
+
+.errorMessage{
+  color: #ff4040;
+}
