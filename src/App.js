@@ -1,25 +1,30 @@
-import logo from './logo.svg';
 import './App.css';
+import {connect} from "react-redux";
+import {
+    BrowserRouter as Router, Link,
+    Route, Redirect
+} from "react-router-dom";
+import Login from "./redux/components/Login/Login";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Tickets from "./redux/components/Tickets/Tickets";
+import Header from "./redux/components/Header/Header";
+
+function App({isAuth}) {
+
+    return (
+        <Router>
+            <Header isAuth={isAuth}/>
+            <Route exact path='/login'
+                   render={() => <Login/>}/>
+            <Route exact path='/tickets'
+                   render={() => <Tickets/>}/>
+        </Router>
+    );
 }
 
-export default App;
+
+let mapStateToProps = (state) => ({
+    isAuth: state.authData.isAuth
+})
+
+export default connect(mapStateToProps, null)(App);

@@ -1,9 +1,7 @@
-const Login = ()=> {
+const Tickets = ()=> {
     return (
-        <form>
-            <h3>login</h3>
-        </form>
+            <h3>tickets list</h3>
     )
 }
 
-export default Login
+export default Tickets
