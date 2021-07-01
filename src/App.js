@@ -23,6 +23,7 @@ class App extends Component {
 
         return (
             <Router>
+                <Header email={this.props.email} isAuth={this.props.isAuth}/>
                 <Route path='/login'
                        render={() => <Login/>}/>
                 <Route path='/tickets'

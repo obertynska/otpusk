@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import {Provider} from "react-redux";
 import {store} from './redux/store'
 
-const rerenderTree = (state) => {
+const rerenderTree = () => {
     ReactDOM.render(
         <React.StrictMode>
             <Provider store={store}>
@@ -18,10 +18,8 @@ const rerenderTree = (state) => {
 }
 rerenderTree()
 
-rerenderTree(store.getState())
 store.subscribe(() => {
-    let state = store.getState()
-    rerenderTree(state)
+    rerenderTree()
 })
 
 
