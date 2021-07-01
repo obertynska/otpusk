@@ -1,7 +1,7 @@
 // contants
 const TOKEN_SECRET_HASH = 'qwerty';
 
-const createToken = (email, password) => btoa(
+export const createToken = (email, password) => btoa(
   JSON.stringify({
     email,
     password,
@@ -9,6 +9,7 @@ const createToken = (email, password) => btoa(
 );
 
 const parseToken = (token) => {
+
   const [user, secret] = atob(token).split('::');
 
   return { user: JSON.parse(user), secret };

@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import s from "./Login.module.css"
 import {Redirect} from "react-router-dom";
 import {login} from "../../authReduser";
+import Header from "../Header/Header";
 
 
 const LoginForm = ({handleSubmit,errorMessage, login}) => {
@@ -11,6 +12,10 @@ const LoginForm = ({handleSubmit,errorMessage, login}) => {
         <form onSubmit={handleSubmit(login)} className={s.loginForm}>
             <Field name="email" component="input" placeholder="Email" type="email"/>
             <Field name="password" component="input" placeholder="Password" type="password"/>
+            <div className={s.rememberMe}>
+                <Field name="rememberMe" component="input" type="checkbox"/>
+                <label htmlFor="rememberMe">remember me?</label>
+            </div>
             {errorMessage &&
             <div className={s.errorMessage}>{errorMessage}</div>
             }
@@ -32,10 +37,12 @@ const Login = ({login, isAuth, errorMessage}) => {
         return <Redirect to = {`/tickets`}/>
     }else{
         return (
+
             <div className={s.loginForm__wrapper}>
                 <h3>Login page</h3>
                 <LoginReduxForm login={login} errorMessage={errorMessage}/>
             </div>
+
         )
     }
 }
