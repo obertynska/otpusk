@@ -53,20 +53,20 @@ export const getFlights = (token) => validateToken(token)
       ? new Response(
         JSON.stringify({
           data: {
-            10: {
-              company: {
-                alternativeNames: ['Fdhjhf', 'арорва', 'АРОРВА'],
-                name: 'Аврора',
+              10: {
+                  company: {
+                      alternativeNames: ['Fdhjhf', 'арорва', 'АРОРВА'],
+                      name: 'Аврора',
+                  },
+                  date: '25-05-2021'
               },
-              date: '25-05-2021'
-            },
-            20: {
-              company: {
-                alternativeNames: [],
-                name: 'Аэрофлот',
+              20: {
+                  company: {
+                      alternativeNames: [],
+                      name: 'Аэрофлот',
+                  },
+                  date: '29-05-2021'
               },
-              date: '29-05-2021'
-            },
           }
         }),
         { status: 200 }

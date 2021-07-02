@@ -8,7 +8,7 @@ import Login from "./redux/components/Login/Login";
 
 import Tickets from "./redux/components/Tickets/Tickets";
 import Header from "./redux/components/Header/Header";
-import {appInitialize} from "./redux/authReduser";
+import {appInitialize, showUserTickets} from "./redux/authReduser";
 import * as PropTypes from "prop-types";
 import {Component} from "react";
 import Preloader from "./redux/components/common/Preloader/Preloader";
@@ -27,7 +27,7 @@ class App extends Component {
                 <Route path='/login'
                        render={() => <Login/>}/>
                 <Route path='/tickets'
-                       render={() => <Tickets/>}/>
+                       render={() => <Tickets isAuth={this.props.isAuth} showUserTickets={showUserTickets}/>}/>
             </Router>
         );
     }

@@ -1,15 +1,20 @@
-import {authenticateUser, createToken, getUser, validateToken} from "../sdk";
-import {stopSubmit} from "redux-form";
+import {authenticateUser, createToken, getFlights, getUser, validateToken} from "../sdk";
 
 const SET_AUTH_USER_DATA = 'SET_AUTH_USER_DATA',
     SET_AUTH_ERROR = 'SET_AUTH_ERROR',
-    SET_APP_INITIALIZE = 'SET_APP_INITIALIZE'
+    SET_APP_INITIALIZE = 'SET_APP_INITIALIZE',
+    SET_USER_TOKEN = 'SET_USER_TOKEN',
+    SET_FLIGHTS = 'SET_FLIGHTS',
+    SET_SEARCHED_FLIGHTS = 'SET_SEARCHED_FLIGHTS'
 
 let initialState = {
     appInitialized: false,
     isAuth: false,
     errorMessage: '',
-    email: ''
+    email: '',
+    flights: {},
+    isSearching: false,
+    searchedFlights: {}
 }
 
 
@@ -31,6 +36,17 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 appInitialized: true
             }
+        case SET_FLIGHTS:
+            return {
+                ...state,
+                flights: {...action.flights}
+            }
+        case SET_SEARCHED_FLIGHTS:
+            return {
+                ...state,
+                isSearching: true,
+                searchedFlights: {...action.searchedFlights}
+            }
         default:
             return state
     }
@@ -43,6 +59,13 @@ const setIsAuthorized = (email) => {
     }
 }
 
+export const setSearchedFlights = (searchedFlights) => {
+    return {
+        type: SET_SEARCHED_FLIGHTS,
+        searchedFlights
+    }
+}
+
 const setErrorMessage = (message) => {
     return {
         type: SET_AUTH_ERROR,
@@ -51,8 +74,8 @@ const setErrorMessage = (message) => {
 }
 
 
-export const login = ({password, email, rememberMe=false}) => dispatch => {
-    if(rememberMe === true){
+export const login = ({password, email, rememberMe = false}) => dispatch => {
+    if (rememberMe === true) {
         let token = createToken(email, password)
         window.localStorage.setItem('token', token);
     }
@@ -64,7 +87,7 @@ export const login = ({password, email, rememberMe=false}) => dispatch => {
             }
 
         })
-        .catch((err)=> {
+        .catch((err) => {
             let message = "Email or password is incorrect"
             dispatch(setErrorMessage(message))
         })
@@ -75,27 +98,85 @@ const isinitialized = () => ({
 })
 
 export const appInitialize = () => dispatch => {
-   let token = window.localStorage.getItem('token');
+    let token = window.localStorage.getItem('token');
 
-   if(token){
-      validateToken(token)
-          .then(res=> {
-             if(res){
-                 getUser(token)
-                     .then((res)=>{
-                         if(res) {
-                             dispatch(setIsAuthorized(res.email))
-                         }
-                     })
-                     .catch(err => console.error(err))
-             }
-          })
-          .catch(err => console.error(err))
-   }
+    if (token) {
+        validateToken(token)
+            .then(res => {
+                if (res) {
+                    getUser(token)
+                        .then((res) => {
+                            if (res) {
+                                dispatch(setIsAuthorized(res.email))
+                            }
+                        })
+                        .catch(err => console.error(err))
+                }
+            })
+            .catch(err => console.error(err))
+    }
 
-   dispatch(isinitialized())
+    dispatch(isinitialized())
 
 
 }
+
+
+const setUserFlights = (flights) => {
+    return {
+        type: SET_FLIGHTS,
+        flights
+    }
+};
+
+
+
+
+export const showUserTickets = () => dispatch => {
+
+    let token = window.localStorage.getItem('token');
+
+    if (token) {
+        getFlights(token)
+            .then(response => response.body)
+            .then(rb => {
+                const reader = rb.getReader();
+
+                return new ReadableStream({
+                    start(controller) {
+                        // The following function handles each data chunk
+                        function push() {
+                            // "done" is a Boolean and value a "Uint8Array"
+                            reader.read().then(({done, value}) => {
+                                // If there is no more data to read
+                                if (done) {
+
+                                    controller.close();
+                                    return;
+                                }
+                                // Get the data and send it to the browser via the controller
+                                controller.enqueue(value);
+                                // Check chunks by logging to the console
+
+                                push();
+                            })
+                        }
+
+                        push();
+                    }
+                });
+            })
+            .then(stream => {
+                // Respond with our stream
+                return new Response(stream, {headers: {"Content-Type": "text/html"}}).text();
+            })
+            .then(result => {
+                // Do things with result
+                let flights = JSON.parse(result)
+                dispatch(setUserFlights(flights.data))
+            });
+    }
+}
+
 
 export default authReducer
