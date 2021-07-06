@@ -4,14 +4,15 @@ import {
     BrowserRouter as Router, Link,
     Route, Redirect
 } from "react-router-dom";
-import Login from "./redux/components/Login/Login";
 
-import Tickets from "./redux/components/Tickets/Tickets";
-import Header from "./redux/components/Header/Header";
 import {appInitialize, showUserTickets} from "./redux/authReduser";
 import * as PropTypes from "prop-types";
 import {Component} from "react";
-import Preloader from "./redux/components/common/Preloader/Preloader";
+import Preloader from "./components/common/Preloader/Preloader";
+import Login from "./components/Login/Login";
+import Tickets from "./components/Tickets/Tickets";
+import Header from "./components/Header/Header";
+
 
 class App extends Component {
     componentDidMount() {

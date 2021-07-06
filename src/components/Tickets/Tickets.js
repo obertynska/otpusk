@@ -1,11 +1,11 @@
 import React from "react";
-import withAuthRedirect from "../../../HOC/withAuthRedirect";
 import * as PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {setSearchedFlights, showUserTickets} from "../../authReduser";
 import {compose} from "redux";
 import Flight from "./Flight/Flight";
 import SearchForm from "./SearchForm/SearchForm";
+import {setSearchedFlights, showUserTickets} from "../../redux/authReduser";
+import withAuthRedirect from "../../HOC/withAuthRedirect";
 
 
 class Tickets extends React.Component {
@@ -64,18 +64,8 @@ class Tickets extends React.Component {
     default
 
     compose(
-        connect
-
-(
-    mapStateToProps
-, {
-    showUserTickets
-,
-    setSearchedFlights
-}
-
-),
-withAuthRedirect
+        connect(  mapStateToProps, { showUserTickets, setSearchedFlights}),
+        withAuthRedirect
 )
 (Tickets)
 

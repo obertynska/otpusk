@@ -3,8 +3,9 @@ import {Field, reduxForm} from 'redux-form'
 import {connect} from "react-redux";
 import s from "./Login.module.css"
 import {Redirect} from "react-router-dom";
-import {login} from "../../authReduser";
-import Header from "../Header/Header";
+import {login} from "../../redux/authReduser";
+
+
 
 
 const LoginForm = ({handleSubmit,errorMessage, login}) => {

@@ -1,5 +1,5 @@
 const Flight = ({data}) => {
-
+debugger
     return (
         <div>
             <p>{data.company.name}</p>
