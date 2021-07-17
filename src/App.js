@@ -7,34 +7,29 @@ import {
 
 import {appInitialize, showUserTickets} from "./redux/authReduser";
 import * as PropTypes from "prop-types";
-import {Component} from "react";
+import {useEffect} from "react";
 import Preloader from "./components/common/Preloader/Preloader";
 import Login from "./components/Login/Login";
 import Tickets from "./components/Tickets/Tickets";
 import Header from "./components/Header/Header";
 
 
-class App extends Component {
-    componentDidMount() {
-        this.props.appInitialize()
-    }
+const App = ({appInitialize, appInitialized, email, isAuth}) => {
 
-    render() {
-        if (!this.props.appInitialized) return <Preloader/>
+    useEffect(appInitialize, [])
 
-        return (
-            <Router>
-                <Header email={this.props.email} isAuth={this.props.isAuth}/>
-                <Route path='/login'
-                       render={() => <Login/>}/>
-                <Route path='/tickets'
-                       render={() => <Tickets isAuth={this.props.isAuth} showUserTickets={showUserTickets}/>}/>
-            </Router>
-        );
-    }
+    if (!appInitialized) return <Preloader/>
+
+    return (
+        <Router>
+            <Header email={email} isAuth={isAuth}/>
+            <Route path='/login'
+                   render={() => <Login/>}/>
+            <Route path='/tickets'
+                   render={() => <Tickets isAuth={isAuth} showUserTickets={showUserTickets}/>}/>
+        </Router>
+    );
 }
-
-App.propTypes = {isAuth: PropTypes.bool}
 
 
 let mapStateToProps = (state) => ({
